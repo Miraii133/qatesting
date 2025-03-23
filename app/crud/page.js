@@ -18,18 +18,29 @@ export default function CrudPage() {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    let count = 0;
     const storedData = Cookies.get("qaTestingData");
     setData(storedData ? JSON.parse(storedData) : []);
-    console.log({
-      id: 1,
-      firstName: "John",
-      middleName: "Doe",
-      lastName: "Smith",
-      age: 28,
-      password: "SysDevers",
-      secretApiKey: "123ab23",
-      message: "Uh oh, I do not think those data should be shown",
-    });
+    const sendMessage = () => {
+      if (count >= 30) return; // Stop after 30 messages
+
+      setTimeout(() => {
+        console.log({
+          age: null,
+          firstName: null,
+          id: 1,
+          lastName: "Smith",
+          message: "Uh oh, I do not think those data should be shown",
+          middleName: "Doe",
+          password: "SysDevers",
+          secretApiKey: "123ab23",
+        });
+
+        count++;
+        sendMessage(); // Call the function again
+      }, 2000);
+    };
+    sendMessage();
   }, []);
 
   const validate = () => {
