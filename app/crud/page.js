@@ -20,6 +20,16 @@ export default function CrudPage() {
   useEffect(() => {
     const storedData = Cookies.get("qaTestingData");
     setData(storedData ? JSON.parse(storedData) : []);
+    console.log({
+      id: 1,
+      firstName: "John",
+      middleName: "Doe",
+      lastName: "Smith",
+      age: 28,
+      password: "SysDevers",
+      secretApiKey: "123ab23",
+      message: "Uh oh, I do not think those data should be shown",
+    });
   }, []);
 
   const validate = () => {
@@ -40,23 +50,28 @@ export default function CrudPage() {
   };
 
   const handleSubmit = (e) => {
+    const delay = Math.floor(Math.random() * 10000) + 1000; // Random delay (1s to 10s)
     e.preventDefault();
     if (!validate()) return;
-    const newData = [...data, { id: Date.now(), ...formData }];
-    setData(newData);
-    Cookies.set("qaTestingData", JSON.stringify(newData), {
-      expires: 7,
-      path: "/",
-    });
-    setFormData({
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      age: "",
-      birthday: "",
-      role: "",
-    });
-    toast.success("Data added successfully!");
+    setTimeout(() => {
+      const newData = [...data, { id: Date.now(), ...formData }];
+      setData(newData);
+      Cookies.set("qaTestingData", JSON.stringify(newData), {
+        expires: 7,
+        path: "/",
+      });
+
+      setFormData({
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        age: "",
+        birthday: "",
+        role: "",
+      });
+
+      toast.success("Data added successfully!");
+    }, delay);
   };
 
   return (
